@@ -13,30 +13,27 @@ const fs = require('fs');
 
 function saveTasks(filePath, tasks) {
     try {
-        if (filePath === "") {
-            throw new error(`Filepath ${filePath} is empty.`);
-        } else {
-            fs.writeFileSync(filePath, JSON.stringify(tasks)) // creates a new file
-            Console.log("Your tasks ${tasks} have been saved.");
-        }
+        // JSON connects files
+        fs.writeFileSync(filePath, JSON.stringify(tasks)) // creates a new file ; stringify makes everything a string
+        console.log(`Your tasks "${tasks}" are saved to \n~${filePath}.`);
     } catch (error) {
-        // error parameter
-        console.error(error.message);
+        console.error(`An error occurred while saving your tasks. \n${error.message}`);
+        return false;
     }
 }
 
 function loadTasks(filePath) {
     try {
-        if (filePath === "") {
-
-        } else
-            fs.readFileSync(filePath)
+        if (fs.existsSync(filePath)) {
+            let data = fs.readFileSync(filePath, 'utf8'); // utf8 is used to encode text data in strings and other data structures
+            return JSON.parse(data); // parse gets rid of brackets
+        }
+        console.log(`Cannot find file ${filePath}.`);
+        return []; // returns task array
     } catch (error) {
-        console.error(error.message);
+        console.error(`An error occurred while loading your tasks.`);
+        return []; // returns task array
     }
 }
-
-// fs.readFileSync(file, encoding)
-// fs.writeFileSync(file, data)
 
 module.exports = { saveTasks, loadTasks };

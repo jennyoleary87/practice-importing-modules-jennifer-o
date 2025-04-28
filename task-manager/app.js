@@ -13,23 +13,19 @@ Load existing tasks from a file named tasks.json.
 4. Save the updated task list back to the file.
 */
 
-const fs = require('fs');
-
 const taskManager = require('./taskManager');
 const fileHandler = require('./fileHandler');
 const path = require('path');
 
-let filepath = "test.txt";
-let tasks = {};
-let taskArr = [];
+let taskPath = path.join(__dirname, 'tasks.json'); // join paths
+// __dirname = absolute path of directory containing the currently executing JS file
+let tasks = fileHandler.loadTasks(taskPath);
 
-tasks = fileHandler.loadTasks
+tasks = taskManager.addTask(tasks, "Brush hair");
+tasks = taskManager.addTask(tasks, "Drink Water");
+// clear tasks.json before running or else it will keep adding the same tasks
 
-// module.exports = {saveTasks} // import function saveTasks from fileHandler
-
-// test functions from fileHandler.js
-// fileHandler.saveTasks("");
-
-taskArr = taskManager.addTask(taskArr, "check calendar");
-fileHandler.saveTasks
-console.log(fileHandler.saveTasks(filepath, tasks));
+// TEST FUNCTIONS
+taskManager.listTasks(tasks); // list all the tasks
+fileHandler.saveTasks(taskPath, tasks); // save the tasks to the json file
+// console.log(tasks);

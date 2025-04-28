@@ -9,15 +9,16 @@ Define and export the following functions:
 */
 
 function addTask(tasks, task) {
-    let taskAdded = tasks.push(task);
-    console.log(tasks);
-    return taskAdded;
-    // return tasks.push(task);
-    // console.log(`${task} has been added.`);
+    tasks.push(task);
+    console.log(`${task} has been added to tasks.`);
+    return tasks;
 }
 
 function listTasks(tasks) {
-    console.log(tasks);
+    console.log("=== TASKS ===");
+    tasks.forEach((task, index) => {
+        console.log(`${index + 1}. ${task}`);
+    });
 }
 
 module.exports = { addTask, listTasks };
